@@ -23,12 +23,12 @@ output "image_pull_policy" {
 }
 
 output "grafana_dashboards" {
-  description = "List of strings representing grafana dashbaords under the form of json strings."
+  description = "List of strings representing grafana dashboards under the form of json strings."
   value       = var.enabled ? local.grafana_dashboards : []
 }
 
 output "prometheus_alert_groups" {
-  description = "List of object representing prometheus alert groups you can importer for prometheus to alert you in case of problems."
+  description = "List of object representing prometheus alert groups you can import in prometheus to alert you in case of problems."
   value       = var.enabled ? local.prometheus_alert_groups : []
 }
 

@@ -52,12 +52,12 @@ Terraform module to deploy oracle db exporter
 | deployment\_name | Name of the deployment created by the module. |
 | deployment\_template\_annotations | Map of annotations that are configured on the deployment. |
 | deployment\_template\_labels | Map of labels that are configured on the deployment. |
-| grafana\_dashboards | List of strings representing grafana dashbaords under the form of json strings. |
+| grafana\_dashboards | List of strings representing grafana dashboards under the form of json strings. |
 | image\_name | Name of the docker image used for the oracledb-exporter container. |
 | image\_pull\_policy | Image pull policy defined on the oracledb-exporter container. |
 | image\_version | Tag of the docker image used for the oracledb-exporter container. |
 | namespace | Name of the namespace in which the resources have been deployed. |
-| prometheus\_alert\_groups | List of object representing prometheus alert groups you can importer for prometheus to alert you in case of problems. |
+| prometheus\_alert\_groups | List of object representing prometheus alert groups you can import in prometheus to alert you in case of problems. |
 | secret\_annotations | Map of annotations that are configured on the secret. |
 | secret\_labels | Map of labels that are configured on the secret. |
 | secret\_name | Name of the secret created by the module. |
