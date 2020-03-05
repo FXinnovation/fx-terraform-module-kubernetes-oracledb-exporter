@@ -63,6 +63,9 @@ resource "kubernetes_deployment" "this" {
     template {
       metadata {
         annotations = merge(
+          {
+            "configuration/hash" = sha1(jsonencode(element(concat(kubernetes_config_map.this.*.data, list("")), 0)))
+          },
           var.annotations,
           var.deployment_template_annotations
         )
