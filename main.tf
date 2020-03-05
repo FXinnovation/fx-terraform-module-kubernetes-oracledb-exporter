@@ -85,7 +85,7 @@ resource "kubernetes_deployment" "this" {
 
           args = concat(
             "" != var.custom_metrics_file ? ["-custom.metrics", "/config/custom-metrics.toml"] : [],
-            ["-default.metrics", "/config/default-metrics.toml"]
+            "" != var.default_metrics_file ? ["-default.metrics", "/config/default-metrics.toml"] : []
           )
 
           env {
@@ -250,7 +250,7 @@ resource "kubernetes_config_map" "this" {
 
   data = {
     "custom-metrics.toml"  = "" != var.custom_metrics_file ? file(var.custom_metrics_file) : ""
-    "default-metrics.toml" = "" != var.default_metrics_file ? file(var.default_metrics_file) : file("${path.module}/templates/default-metrics.toml")
+    "default-metrics.toml" = "" != var.default_metrics_file ? file(var.default_metrics_file) : ""
   }
 }
 
