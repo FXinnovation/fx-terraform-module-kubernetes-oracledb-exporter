@@ -10,10 +10,91 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/name"       = "oracledb-exporter"
   }
-  port                    = 9161
-  service_port            = 80
-  grafana_dashboards      = [file("${path.module}/templates/grafana-dashboards/oracle.json")]
-  prometheus_alert_groups = []
+  port               = 9161
+  service_port       = 80
+  grafana_dashboards = [file("${path.module}/templates/grafana-dashboards/oracle.json")]
+  prometheus_alert_groups = [
+    {
+      "name" = "oracledb-exporter"
+      "rules" = [
+        {
+          "alert"  = "OracledbExpoterScrapeErrors"
+          "expr"   = "oracledb_exporter_last_scrape_error > 0"
+          "for"    = "1m"
+          "labels" = {}
+          "annotations" = {
+            "summary"     = "Oracle DB - Scrape Error on {{ $labels.instance }}",
+            "description" = "Oracle DB:\n {{ $labels.instance }} scrape errors.\nLabels:\n{{ $labels }}"
+          }
+        },
+        {
+          "alert"  = "OracledbExpoterScrapeDurationError"
+          "expr"   = "deriv(oracledb_exporter_last_scrape_duration_seconds[2m]) and oracledb_exporter_last_scrape_duration_seconds > 10"
+          "for"    = "5m"
+          "labels" = {}
+          "annotations" = {
+            "summary"     = "Oracle DB - Scrape Duration Error on {{ $labels.instance }}",
+            "description" = "Oracle DB:\n {{ $labels.instance }} scrape durations is too high.\nLabels:\n{{ $labels }}"
+          }
+        }
+      ]
+    },
+    {
+      "name" = "oracledb"
+      "rules" = [
+        {
+          "alert"  = "OracledbDatabaseDown"
+          "expr"   = "oracledb_up < 1"
+          "for"    = "1m"
+          "labels" = {}
+          "annotations" = {
+            "summary"     = "Oracle DB - Database Down on {{ $labels.instance }}"
+            "description" = "Oracle DB:\n {{ $labels.instance }} database is down.\nLabels:\n{{ $labels }}"
+          }
+        },
+        {
+          "alert"  = "OracledbTablespaceLowWarning"
+          "expr"   = "(oracledb_tablespace_free / oracledb_tablespace_max_bytes) * 100 > 75"
+          "for"    = "15m"
+          "labels" = {}
+          "annotations" = {
+            "summary"     = "Oracle DB - Tablespace is getting low on {{ $labels.instance }}"
+            "description" = "Oracle DB:\n Tablespace on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+          }
+        },
+        {
+          "alert"  = "OracledbTablespaceLowCritical"
+          "expr"   = "(oracledb_tablespace_free / oracledb_tablespace_max_bytes) * 100 > 85"
+          "for"    = "15m"
+          "labels" = {}
+          "annotations" = {
+            "summary"     = "Oracle DB - Tablespace is low on {{ $labels.instance }}"
+            "description" = "Oracle DB:\n Tablespace on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+          }
+        },
+        {
+          "alert"  = "OracledbAsmDiskGroupDataLowWarning"
+          "expr"   = "(oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100 > 75"
+          "for"    = "15m"
+          "labels" = {}
+          "annotations" = {
+            "summary"     = "Oracle DB - ASM Disk Group DATA is getting low on {{ $labels.instance }}"
+            "description" = "Oracle DB:\n ASM disk group DATA on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+          }
+        },
+        {
+          "alert"  = "OracledbAsmDiskGroupDataLowCritical"
+          "expr"   = "(oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100 > 85"
+          "for"    = "15m"
+          "labels" = {}
+          "annotations" = {
+            "summary"     = "Oracle DB - ASM Disk Group DATA is low on {{ $labels.instance }}"
+            "description" = "Oracle DB:\n ASM disk group DATA on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+          }
+        }
+      ]
+    }
+  ]
 }
 
 #####
