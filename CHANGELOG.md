@@ -1,4 +1,9 @@
 
+0.3.0 / 2020-03-06
+==================
+
+  * feat: Add prometheus alert labels and annotation variable
+
 0.2.0 / 2020-03-06
 ==================
 

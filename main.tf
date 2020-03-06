@@ -21,27 +21,39 @@ locals {
           "alert" = "OracledbExpoterScrapeErrors"
           "expr"  = "oracledb_exporter_last_scrape_error > 0"
           "for"   = "1m"
-          "labels" = {
-            "severity" = "critical"
-            "urgency"  = "2"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - Scrape Error on {{ $labels.instance }}",
-            "description" = "Oracle DB:\n {{ $labels.instance }} scrape errors.\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "critical"
+              "urgency"  = "2"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - Scrape Error on {{ $labels.instance }}",
+              "description" = "Oracle DB:\n {{ $labels.instance }} scrape errors.\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         },
         {
           "alert" = "OracledbExpoterScrapeDurationError"
           "expr"  = "deriv(oracledb_exporter_last_scrape_duration_seconds[2m]) > 0.2 and oracledb_exporter_last_scrape_duration_seconds > 10"
           "for"   = "5m"
-          "labels" = {
-            "severity" = "warning"
-            "urgency"  = "3"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - Scrape Duration Error on {{ $labels.instance }}",
-            "description" = "Oracle DB:\n {{ $labels.instance }} scrape durations is too high.\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "warning"
+              "urgency"  = "3"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - Scrape Duration Error on {{ $labels.instance }}",
+              "description" = "Oracle DB:\n {{ $labels.instance }} scrape durations is too high.\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         }
       ]
     },
@@ -52,92 +64,134 @@ locals {
           "alert" = "OracledbDatabaseDown"
           "expr"  = "oracledb_up < 1"
           "for"   = "1m"
-          "labels" = {
-            "severity" = "critical"
-            "urgency"  = "2"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - Database Down on {{ $labels.instance }}"
-            "description" = "Oracle DB:\n {{ $labels.instance }} database is down.\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "critical"
+              "urgency"  = "2"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - Database Down on {{ $labels.instance }}"
+              "description" = "Oracle DB:\n {{ $labels.instance }} database is down.\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         },
         {
           "alert" = "OracledbTablespaceLowWarning"
           "expr"  = "100 - ((oracledb_tablespace_free / oracledb_tablespace_bytes) * 100) > 75"
           "for"   = "15m"
-          "labels" = {
-            "severity" = "warning"
-            "urgency"  = "3"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - Tablespace {{ $labels.tablespace }} is getting low on {{ $labels.instance }}"
-            "description" = "Oracle DB:\n Tablespace {{ $labels.tablespace }} on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "warning"
+              "urgency"  = "3"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - Tablespace {{ $labels.tablespace }} is getting low on {{ $labels.instance }}"
+              "description" = "Oracle DB:\n Tablespace {{ $labels.tablespace }} on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         },
         {
           "alert" = "OracledbTablespaceLowCritical"
           "expr"  = "100 - ((oracledb_tablespace_free / oracledb_tablespace_bytes) * 100) > 85"
           "for"   = "15m"
-          "labels" = {
-            "severity" = "critical"
-            "urgency"  = "3"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - Tablespace {{ $labels.tablespace }} is low on {{ $labels.instance }}"
-            "description" = "Oracle DB:\n Tablespace {{ $labels.tablespace }} on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "critical"
+              "urgency"  = "3"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - Tablespace {{ $labels.tablespace }} is low on {{ $labels.instance }}"
+              "description" = "Oracle DB:\n Tablespace {{ $labels.tablespace }} on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         },
         {
           "alert" = "OracledbAsmDiskGroupDataLowWarning"
           "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100) > 75"
           "for"   = "15m"
-          "labels" = {
-            "severity" = "warning"
-            "urgency"  = "3"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - ASM Disk Group DATA is getting low on {{ $labels.instance }}"
-            "description" = "Oracle DB:\n ASM disk group DATA on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "warning"
+              "urgency"  = "3"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - ASM Disk Group DATA is getting low on {{ $labels.instance }}"
+              "description" = "Oracle DB:\n ASM disk group DATA on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         },
         {
           "alert" = "OracledbAsmDiskGroupDataLowCritical"
           "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100) > 85"
           "for"   = "15m"
-          "labels" = {
-            "severity" = "critical"
-            "urgency"  = "3"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - ASM Disk Group DATA is low on {{ $labels.instance }}"
-            "description" = "Oracle DB:\n ASM disk group DATA on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "critical"
+              "urgency"  = "3"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - ASM Disk Group DATA is low on {{ $labels.instance }}"
+              "description" = "Oracle DB:\n ASM disk group DATA on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         },
         {
           "alert" = "OracledbAsmDiskGroupArchLowWarning"
           "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"ARCH\"} / oracledb_asm_diskgroup_total{name=\"ARCH\"}) * 100) > 75"
           "for"   = "15m"
-          "labels" = {
-            "severity" = "warning"
-            "urgency"  = "3"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - ASM Disk Group ARCH is getting low on {{ $labels.instance }}"
-            "description" = "Oracle DB:\n ASM disk group ARCH on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "warning"
+              "urgency"  = "3"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - ASM Disk Group ARCH is getting low on {{ $labels.instance }}"
+              "description" = "Oracle DB:\n ASM disk group ARCH on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         },
         {
           "alert" = "OracledbAsmDiskGroupArchLowCritical"
           "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"ARCH\"} / oracledb_asm_diskgroup_total{name=\"ARCH\"}) * 100) > 85"
           "for"   = "15m"
-          "labels" = {
-            "severity" = "critical"
-            "urgency"  = "3"
-          }
-          "annotations" = {
-            "summary"     = "Oracle DB - ASM Disk Group ARCH is low on {{ $labels.instance }}"
-            "description" = "Oracle DB:\n ASM disk group ARCH on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
-          }
+          "labels" = merge(
+            {
+              "severity" = "critical"
+              "urgency"  = "3"
+            },
+            var.prometheus_alert_groups_rules_labels
+          )
+          "annotations" = merge(
+            {
+              "summary"     = "Oracle DB - ASM Disk Group ARCH is low on {{ $labels.instance }}"
+              "description" = "Oracle DB:\n ASM disk group ARCH on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
+            },
+            var.prometheus_alert_groups_rules_annotations
+          )
         }
       ]
     }
