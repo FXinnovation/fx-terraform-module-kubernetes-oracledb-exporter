@@ -63,7 +63,7 @@ locals {
         },
         {
           "alert" = "OracledbTablespaceLowWarning"
-          "expr"  = "(oracledb_tablespace_free / oracledb_tablespace_bytes) * 100 > 75"
+          "expr"  = "100 - ((oracledb_tablespace_free / oracledb_tablespace_bytes) * 100) > 75"
           "for"   = "15m"
           "labels" = {
             "severity" = "warning"
@@ -89,7 +89,7 @@ locals {
         },
         {
           "alert" = "OracledbAsmDiskGroupDataLowWarning"
-          "expr"  = "(oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100 > 75"
+          "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100) > 75"
           "for"   = "15m"
           "labels" = {
             "severity" = "warning"
@@ -102,7 +102,7 @@ locals {
         },
         {
           "alert" = "OracledbAsmDiskGroupDataLowCritical"
-          "expr"  = "(oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100 > 85"
+          "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100) > 85"
           "for"   = "15m"
           "labels" = {
             "severity" = "critical"
@@ -115,7 +115,7 @@ locals {
         },
         {
           "alert" = "OracledbAsmDiskGroupArchLowWarning"
-          "expr"  = "(oracledb_asm_diskgroup_free{name=\"ARCH\"} / oracledb_asm_diskgroup_total{name=\"ARCH\"}) * 100 > 75"
+          "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"ARCH\"} / oracledb_asm_diskgroup_total{name=\"ARCH\"}) * 100) > 75"
           "for"   = "15m"
           "labels" = {
             "severity" = "warning"
@@ -128,7 +128,7 @@ locals {
         },
         {
           "alert" = "OracledbAsmDiskGroupArchLowCritical"
-          "expr"  = "(oracledb_asm_diskgroup_free{name=\"ARCH\"} / oracledb_asm_diskgroup_total{name=\"ARCH\"}) * 100 > 85"
+          "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"ARCH\"} / oracledb_asm_diskgroup_total{name=\"ARCH\"}) * 100) > 85"
           "for"   = "15m"
           "labels" = {
             "severity" = "critical"
