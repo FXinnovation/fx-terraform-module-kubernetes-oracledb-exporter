@@ -32,7 +32,7 @@ locals {
         },
         {
           "alert" = "OracledbExpoterScrapeDurationError"
-          "expr"  = "deriv(oracledb_exporter_last_scrape_duration_seconds[2m]) and oracledb_exporter_last_scrape_duration_seconds > 10"
+          "expr"  = "deriv(oracledb_exporter_last_scrape_duration_seconds[2m]) > 0.2 and oracledb_exporter_last_scrape_duration_seconds > 10"
           "for"   = "5m"
           "labels" = {
             "severity" = "warning"

@@ -2,6 +2,7 @@
 0.2.0 / 2020-03-06
 ==================
 
+  * fix: deriv calculation
   * fix: alert expression - reverse logic
   * feat: Add new alerts
   * feat: Add some simple alerts as outputs
