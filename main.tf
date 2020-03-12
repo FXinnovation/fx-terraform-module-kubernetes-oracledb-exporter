@@ -20,7 +20,7 @@ locals {
         {
           "alert" = "OracledbExpoterScrapeErrors"
           "expr"  = "oracledb_exporter_last_scrape_error > 0"
-          "for"   = "1m"
+          "for"   = "5m"
           "labels" = merge(
             {
               "severity" = "critical"
