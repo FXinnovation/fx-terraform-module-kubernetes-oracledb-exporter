@@ -81,7 +81,7 @@ locals {
         },
         {
           "alert" = "OracledbTablespaceLowWarning"
-          "expr"  = "100 - ((oracledb_tablespace_free / oracledb_tablespace_bytes) * 100) > 75"
+          "expr"  = "((oracledb_tablespace_bytes - oracledb_tablespace_free) / oracledb_tablespace_max_bytes) * 100 > 75"
           "for"   = "15m"
           "labels" = merge(
             {
@@ -100,7 +100,7 @@ locals {
         },
         {
           "alert" = "OracledbTablespaceLowCritical"
-          "expr"  = "100 - ((oracledb_tablespace_free / oracledb_tablespace_bytes) * 100) > 85"
+          "expr"  = "((oracledb_tablespace_bytes - oracledb_tablespace_free) / oracledb_tablespace_max_bytes) * 100 > 85"
           "for"   = "15m"
           "labels" = merge(
             {
