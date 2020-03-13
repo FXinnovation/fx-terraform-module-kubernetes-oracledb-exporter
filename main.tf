@@ -271,7 +271,8 @@ resource "kubernetes_deployment" "this" {
           args = concat(
             "" != var.custom_metrics_file ? ["-custom.metrics", "/config/custom-metrics.toml"] : [],
             "" != var.default_metrics_file ? ["-default.metrics", "/config/default-metrics.toml"] : [],
-            "" != var.log_level ? ["-log.level", var.log_level] : []
+            "" != var.log_level ? ["-log.level", var.log_level] : [],
+            "" != var.query_timeout ? ["-query.timeout", var.query_timeout] : []
           )
 
           env {

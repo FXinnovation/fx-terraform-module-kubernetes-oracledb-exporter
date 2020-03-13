@@ -35,6 +35,7 @@ Terraform module to deploy oracle db exporter
 | namespace | Namespace in which the module will be deployed. | `string` | `"default"` | no |
 | prometheus\_alert\_groups\_rules\_annotations | Map of strings that will be merge on all prometheus alert groups rules annotations. | `map` | `{}` | no |
 | prometheus\_alert\_groups\_rules\_labels | Map of strings that will be merge on all prometheus alert groups rules labels. | `map` | `{}` | no |
+| query\_timeout | Amount of time in seconds before the exporter should timeout the query. Note: This time MUST be less then the scrape\_timeout of prometheus. | `string` | `""` | no |
 | replicas | Number of replicas to deploy. | `number` | `1` | no |
 | secret\_annotations | Additionnal annotations that will be merged for the secret. | `map` | `{}` | no |
 | secret\_labels | Additionnal labels that will be merged for the secret. | `map` | `{}` | no |

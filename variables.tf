@@ -60,6 +60,11 @@ variable "log_level" {
   default     = ""
 }
 
+variable "query_timeout" {
+  description = "Amount of time in seconds before the exporter should timeout the query. Note: This time MUST be less then the scrape_timeout of prometheus."
+  default     = ""
+}
+
 #####
 # Deployment
 #####
