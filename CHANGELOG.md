@@ -2,6 +2,7 @@
 0.4.0 / 2020-03-12
 ==================
 
+  * fix: Pin application image to 0.2.6a
   * feat: Allow user to set application log level
 
 0.3.1 / 2020-03-12

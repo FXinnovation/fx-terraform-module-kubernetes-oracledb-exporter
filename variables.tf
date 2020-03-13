@@ -101,7 +101,7 @@ variable "image_pull_policy" {
 
 variable "image_version" {
   description = "Tag of the docker image to use."
-  default     = "latest"
+  default     = "0.2.6a"
 }
 
 variable "replicas" {
