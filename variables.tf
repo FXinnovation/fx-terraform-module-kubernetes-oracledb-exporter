@@ -55,6 +55,11 @@ variable "custom_metrics_file" {
   default     = ""
 }
 
+variable "log_level" {
+  description = "Log level to set on the exporter. Valid levels: [debug, info, warn, error, fatal]."
+  default     = ""
+}
+
 #####
 # Deployment
 #####

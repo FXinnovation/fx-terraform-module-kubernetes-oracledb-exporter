@@ -31,6 +31,7 @@ Terraform module to deploy oracle db exporter
 | image\_pull\_policy | Image pull policy on the main container. | `string` | `"IfNotPresent"` | no |
 | image\_version | Tag of the docker image to use. | `string` | `"latest"` | no |
 | labels | Additionnal labels that will be merged on all resources. | `map` | `{}` | no |
+| log\_level | Log level to set on the exporter. Valid levels: [debug, info, warn, error, fatal]. | `string` | `""` | no |
 | namespace | Namespace in which the module will be deployed. | `string` | `"default"` | no |
 | prometheus\_alert\_groups\_rules\_annotations | Map of strings that will be merge on all prometheus alert groups rules annotations. | `map` | `{}` | no |
 | prometheus\_alert\_groups\_rules\_labels | Map of strings that will be merge on all prometheus alert groups rules labels. | `map` | `{}` | no |
