@@ -18,7 +18,7 @@ locals {
       "name" = "oracledb-exporter"
       "rules" = [
         {
-          "alert" = "OracledbExpoterScrapeErrors"
+          "alert" = "oracledb expoter - Scrape Errors"
           "expr"  = "oracledb_exporter_last_scrape_error > 0"
           "for"   = "5m"
           "labels" = merge(
@@ -37,7 +37,7 @@ locals {
           )
         },
         {
-          "alert" = "OracledbExpoterScrapeDurationError"
+          "alert" = "oracledb exporter - Scrape Duration Error"
           "expr"  = "deriv(oracledb_exporter_last_scrape_duration_seconds[2m]) > 0.2 and oracledb_exporter_last_scrape_duration_seconds > 10"
           "for"   = "5m"
           "labels" = merge(
@@ -61,7 +61,7 @@ locals {
       "name" = "oracledb"
       "rules" = [
         {
-          "alert" = "OracledbDatabaseDown"
+          "alert" = "oracledb - Database Down"
           "expr"  = "oracledb_up < 1"
           "for"   = "1m"
           "labels" = merge(
@@ -80,7 +80,7 @@ locals {
           )
         },
         {
-          "alert" = "OracledbTablespaceLowWarning"
+          "alert" = "oracledb - Tablespace Low Warning"
           "expr"  = "((oracledb_tablespace_bytes - oracledb_tablespace_free) / oracledb_tablespace_max_bytes) * 100 > 75"
           "for"   = "15m"
           "labels" = merge(
@@ -99,7 +99,7 @@ locals {
           )
         },
         {
-          "alert" = "OracledbTablespaceLowCritical"
+          "alert" = "oracledb - Tablespace Low Critical"
           "expr"  = "((oracledb_tablespace_bytes - oracledb_tablespace_free) / oracledb_tablespace_max_bytes) * 100 > 85"
           "for"   = "15m"
           "labels" = merge(
@@ -118,7 +118,7 @@ locals {
           )
         },
         {
-          "alert" = "OracledbAsmDiskGroupDataLowWarning"
+          "alert" = "oracledb - ASM Disk Group Data Low Warning"
           "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100) > 75"
           "for"   = "15m"
           "labels" = merge(
@@ -137,7 +137,7 @@ locals {
           )
         },
         {
-          "alert" = "OracledbAsmDiskGroupDataLowCritical"
+          "alert" = "oracledb - ASM Disk Group Data Low Critical"
           "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"DATA\"} / oracledb_asm_diskgroup_total{name=\"DATA\"}) * 100) > 85"
           "for"   = "15m"
           "labels" = merge(
@@ -156,7 +156,7 @@ locals {
           )
         },
         {
-          "alert" = "OracledbAsmDiskGroupArchLowWarning"
+          "alert" = "oracledb - ASM Disk Group Arch Low Warning"
           "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"ARCH\"} / oracledb_asm_diskgroup_total{name=\"ARCH\"}) * 100) > 75"
           "for"   = "15m"
           "labels" = merge(
@@ -175,7 +175,7 @@ locals {
           )
         },
         {
-          "alert" = "OracledbAsmDiskGroupArchLowCritical"
+          "alert" = "oracledb - ASM Disk Group Arch Low Critical"
           "expr"  = "100 - ((oracledb_asm_diskgroup_free{name=\"ARCH\"} / oracledb_asm_diskgroup_total{name=\"ARCH\"}) * 100) > 85"
           "for"   = "15m"
           "labels" = merge(
