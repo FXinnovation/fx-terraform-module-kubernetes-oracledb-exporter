@@ -13,6 +13,12 @@ locals {
   port               = 9161
   service_port       = 80
   grafana_dashboards = [file("${path.module}/templates/grafana-dashboards/oracle.json")]
+  prometheus_alert_groups_rules_annotations = merge(
+    {
+      "source" = "https://scm.dazzlingwrench.fxinnovation.com/fxinnovation-public/terraform-module-kubernetes-oracledb-exporter"
+    },
+    var.prometheus_alert_groups_rules_annotations
+  )
   prometheus_alert_groups = [
     {
       "name" = "oracledb-exporter"
@@ -30,10 +36,12 @@ locals {
           )
           "annotations" = merge(
             {
-              "summary"     = "Oracle DB - Scrape Error on {{ $labels.instance }}",
-              "description" = "Oracle DB:\n {{ $labels.instance }} scrape errors.\nLabels:\n{{ $labels }}"
+              "summary"              = "Oracle DB - Scrape Error on {{ $labels.instance }}",
+              "description"          = "Oracle DB:\n {{ $labels.instance }} scrape errors.\nLabels:\n{{ $labels }}"
+              "description_html"     = "<h3>oracledb-exporter</h3><p>{{ $labels.instance }} has had scrape errors for 5 minutes.</p><h4>Labels</h4><table><tr><th>Key</th><th>Value</th></tr>{{ range $key, $value := $labels }}<tr><td>{{ $key }}</td><td>{{ $value }}</td></tr>{{ end }}</table>"
+              "description_markdown" = "### oracledb-exporter\n{{ $labels.instance }} has had scrape errors for 5 minutes.\n#### Labels\n|Key|Value|\n|----|----|\n{{ range $key, $value := $labels }}|{{ $key }}|{{ $value }}|\n{{ end }}\n"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         },
         {
@@ -52,7 +60,7 @@ locals {
               "summary"     = "Oracle DB - Scrape Duration Error on {{ $labels.instance }}",
               "description" = "Oracle DB:\n {{ $labels.instance }} scrape durations is too high.\nLabels:\n{{ $labels }}"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         }
       ]
@@ -76,7 +84,7 @@ locals {
               "summary"     = "Oracle DB - Database Down on {{ $labels.instance }}"
               "description" = "Oracle DB:\n {{ $labels.instance }} database is down.\nLabels:\n{{ $labels }}"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         },
         {
@@ -95,7 +103,7 @@ locals {
               "summary"     = "Oracle DB - Tablespace {{ $labels.tablespace }} is getting low on {{ $labels.instance }}"
               "description" = "Oracle DB:\n Tablespace {{ $labels.tablespace }} on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         },
         {
@@ -114,7 +122,7 @@ locals {
               "summary"     = "Oracle DB - Tablespace {{ $labels.tablespace }} is low on {{ $labels.instance }}"
               "description" = "Oracle DB:\n Tablespace {{ $labels.tablespace }} on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         },
         {
@@ -133,7 +141,7 @@ locals {
               "summary"     = "Oracle DB - ASM Disk Group DATA is getting low on {{ $labels.instance }}"
               "description" = "Oracle DB:\n ASM disk group DATA on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         },
         {
@@ -152,7 +160,7 @@ locals {
               "summary"     = "Oracle DB - ASM Disk Group DATA is low on {{ $labels.instance }}"
               "description" = "Oracle DB:\n ASM disk group DATA on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         },
         {
@@ -171,7 +179,7 @@ locals {
               "summary"     = "Oracle DB - ASM Disk Group ARCH is getting low on {{ $labels.instance }}"
               "description" = "Oracle DB:\n ASM disk group ARCH on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         },
         {
@@ -190,7 +198,7 @@ locals {
               "summary"     = "Oracle DB - ASM Disk Group ARCH is low on {{ $labels.instance }}"
               "description" = "Oracle DB:\n ASM disk group ARCH on {{ $labels.instance }} database is at {{ $value }}%\nLabels:\n{{ $labels }}"
             },
-            var.prometheus_alert_groups_rules_annotations
+            local.prometheus_alert_groups_rules_annotations
           )
         }
       ]
