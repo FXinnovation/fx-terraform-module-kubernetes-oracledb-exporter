@@ -236,8 +236,7 @@ resource "kubernetes_deployment" "this" {
 
     selector {
       match_labels = {
-        app    = "oracledb-exporter"
-        random = random_string.selector.result
+        selector = "oracledb-exporter-${random_string.selector.result}"
       }
     }
     template {
@@ -252,8 +251,7 @@ resource "kubernetes_deployment" "this" {
         labels = merge(
           {
             instance = var.deployment_name
-            app      = "oracledb-exporter"
-            random   = random_string.selector.result
+            selector = "oracledb-exporter-${random_string.selector.result}"
           },
           local.labels,
           var.labels,
@@ -394,8 +392,7 @@ resource "kubernetes_service" "this" {
 
   spec {
     selector = {
-      random = random_string.selector.result
-      app    = "oracledb-exporter"
+      selector = "oracledb-exporter-${random_string.selector.result}"
     }
     type = "ClusterIP"
     port {
