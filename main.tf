@@ -12,7 +12,7 @@ locals {
   }
   port               = 9161
   service_port       = 80
-  grafana_dashboards = [file("${path.module}/templates/grafana-dashboards/oracle.json")]
+  grafana_dashboards = [file("${path.module}/files/grafana-dashboards/oracle.json")]
   prometheus_alert_groups = [
     {
       "name" = "oracledb-exporter"
@@ -243,7 +243,7 @@ resource "kubernetes_deployment" "this" {
       metadata {
         annotations = merge(
           {
-            "configuration/hash" = sha1(jsonencode(element(concat(kubernetes_config_map.this.*.data, list("")), 0)))
+            "configuration/hash" = sha1(jsonencode(kubernetes_config_map.this.data))
           },
           var.annotations,
           var.deployment_template_annotations
@@ -275,10 +275,20 @@ resource "kubernetes_deployment" "this" {
             name = "DATA_SOURCE_NAME"
             value_from {
               secret_key_ref {
-                name = element(concat(kubernetes_secret.this.*.metadata.0.name, [""]), 0)
+                name = kubernetes_secret.this.metadata.0.name
                 key  = "data_source_name"
               }
             }
+          }
+
+          env {
+            name  = "TNS_ADMIN"
+            value = "/tnsadmin"
+          }
+
+          env {
+            name  = "TNS_ENTRY"
+            value = var.tns_entry
           }
 
           readiness_probe {
@@ -337,12 +347,18 @@ resource "kubernetes_deployment" "this" {
             mount_path = "/config/custom-metrics.toml"
             sub_path   = "custom-metrics.toml"
           }
+
+          volume_mount {
+            name       = "tnsnames"
+            mount_path = "/tnsadmin/tnsnames.ora"
+            sub_path   = "tnsnames.ora"
+          }
         }
 
         volume {
           name = "default-metrics"
           config_map {
-            name = element(concat(kubernetes_config_map.this.*.metadata.0.name, [""]), 0)
+            name = kubernetes_config_map.this.metadata.0.name
             items {
               key  = "default-metrics.toml"
               path = "default-metrics.toml"
@@ -353,10 +369,21 @@ resource "kubernetes_deployment" "this" {
         volume {
           name = "custom-metrics"
           config_map {
-            name = element(concat(kubernetes_config_map.this.*.metadata.0.name, [""]), 0)
+            name = kubernetes_config_map.this.metadata.0.name
             items {
               key  = "custom-metrics.toml"
               path = "custom-metrics.toml"
+            }
+          }
+        }
+
+        volume {
+          name = "tnsnames"
+          config_map {
+            name = kubernetes_config_map.this.metadata.0.name
+            items {
+              key  = "tnsnames.ora"
+              path = "tnsnames.ora"
             }
           }
         }
@@ -429,6 +456,7 @@ resource "kubernetes_config_map" "this" {
   data = {
     "custom-metrics.toml"  = "" != var.custom_metrics_file ? file(var.custom_metrics_file) : ""
     "default-metrics.toml" = "" != var.default_metrics_file ? file(var.default_metrics_file) : ""
+    "tnsnames.ora"         = "" != var.tnsnames_file ? file(var.tnsnames_file) : ""
   }
 }
 

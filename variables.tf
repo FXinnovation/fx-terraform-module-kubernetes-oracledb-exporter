@@ -50,6 +50,11 @@ variable "custom_metrics_file" {
   default     = ""
 }
 
+variable "tnsnames_file" {
+  description = "PAth of the oracle tnsnames.ora file. Leave empty if you do not need this."
+  default     = ""
+}
+
 variable "log_level" {
   description = "Log level to set on the exporter. Valid levels: [debug, info, warn, error, fatal]."
   default     = ""
@@ -57,6 +62,11 @@ variable "log_level" {
 
 variable "query_timeout" {
   description = "Amount of time in seconds before the exporter should timeout the query. Note: This time MUST be less then the scrape_timeout of prometheus."
+  default     = ""
+}
+
+variable "tns_entry" {
+  description = "Name ofthe TNS entry to use in the tnsnames.ora file. Leave empty if you do not need this."
   default     = ""
 }
 

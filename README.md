@@ -50,6 +50,8 @@ Terraform module to deploy oracle db exporter
 | service\_annotations | Additionnal annotations that will be merged for the service. | `map` | `{}` | no |
 | service\_labels | Additionnal labels that will be merged for the service. | `map` | `{}` | no |
 | service\_name | Name of the service that will be create | `string` | `"oracledb-exporter"` | no |
+| tns\_entry | Name ofthe TNS entry to use in the tnsnames.ora file. Leave empty if you do not need this. | `string` | `""` | no |
+| tnsnames\_file | PAth of the oracle tnsnames.ora file. Leave empty if you do not need this. | `string` | `""` | no |
 
 ## Outputs
 

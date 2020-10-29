@@ -1,4 +1,15 @@
 
+1.0.0 / 2020-10-29
+==================
+
+  * feat: Add possibility to use TNS_ADMIN options from oracle
+  * maintenance: (BREAKING) Changing module outputs
+  * maintenance: (BREAKING) Chaning selector label to fit best practices
+  * maintenance: (BREAKING) Removing the enabled variable
+  * maintenance: (BREAKING) Adapt labels to match convention
+  * maintenance: (BREAKING) rename templates to folder
+  * chore: Update pre-commit configuration
+
 0.5.1 / 2020-03-13
 ==================
 
