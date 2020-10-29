@@ -4,11 +4,11 @@
 
 locals {
   labels = {
-    "app.kubernetes.io/version"    = var.image_version
-    "app.kubernetes.io/component"  = "exporter"
-    "app.kubernetes.io/part-of"    = "monitoring"
-    "app.kubernetes.io/managed-by" = "terraform"
-    "app.kubernetes.io/name"       = "oracledb-exporter"
+    version    = var.image_version
+    component  = "exporter"
+    part-of    = "monitoring"
+    managed-by = "terraform"
+    name       = "oracledb-exporter"
   }
   port               = 9161
   service_port       = 80
@@ -225,7 +225,7 @@ resource "kubernetes_deployment" "this" {
     )
     labels = merge(
       {
-        "app.kubernetes.io/instance" = var.deployment_name
+        instance = var.deployment_name
       },
       local.labels,
       var.labels,
@@ -253,9 +253,9 @@ resource "kubernetes_deployment" "this" {
         )
         labels = merge(
           {
-            "app.kubernetes.io/instance" = var.deployment_name
-            app                          = "oracledb-exporter"
-            random                       = random_string.selector.result
+            instance = var.deployment_name
+            app      = "oracledb-exporter"
+            random   = random_string.selector.result
           },
           local.labels,
           var.labels,
@@ -388,7 +388,7 @@ resource "kubernetes_service" "this" {
     )
     labels = merge(
       {
-        "app.kubernetes.io/instance" = var.service_name
+        instance = var.service_name
       },
       local.labels,
       var.labels,
@@ -427,7 +427,7 @@ resource "kubernetes_config_map" "this" {
     )
     labels = merge(
       {
-        "app.kubernetes.io/instance" = var.config_map_name
+        instance = var.config_map_name
       },
       local.labels,
       var.labels,
@@ -457,7 +457,7 @@ resource "kubernetes_secret" "this" {
     )
     labels = merge(
       {
-        "app.kubernetes.io/instance" = var.secret_name
+        instance = var.secret_name
       },
       local.labels,
       var.labels,
