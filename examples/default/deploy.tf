@@ -12,59 +12,11 @@ provider "kubernetes" {
 }
 
 #####
-# Randoms
-#####
-
-resource "random_string" "default" {
-  upper   = false
-  number  = false
-  special = false
-  length  = 8
-}
-
-resource "random_string" "disabled" {
-  upper   = false
-  number  = false
-  special = false
-  length  = 8
-}
-
-#####
-# Context
-#####
-
-resource "kubernetes_namespace" "default" {
-  metadata {
-    name = random_string.default.result
-  }
-}
-
-resource "kubernetes_namespace" "disabled" {
-  metadata {
-    name = random_string.disabled.result
-  }
-}
-
-#####
 # default example
 #####
 
-module "default" {
+module "this" {
   source = "../.."
 
-  namespace        = kubernetes_namespace.default.metadata.0.name
-  data_source_name = "fake"
-}
-
-#####
-# disabled example
-#####
-
-module "disabled" {
-  source = "../.."
-
-  enabled = false
-
-  namespace        = kubernetes_namespace.disabled.metadata.0.name
   data_source_name = "fake"
 }
