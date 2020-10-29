@@ -214,8 +214,6 @@ resource "random_string" "selector" {
 #####
 
 resource "kubernetes_deployment" "this" {
-  count = var.enabled ? 1 : 0
-
   metadata {
     name      = var.deployment_name
     namespace = var.namespace
@@ -374,8 +372,6 @@ resource "kubernetes_deployment" "this" {
 #####
 
 resource "kubernetes_service" "this" {
-  count = var.enabled ? 1 : 0
-
   metadata {
     name      = var.service_name
     namespace = var.namespace
@@ -416,8 +412,6 @@ resource "kubernetes_service" "this" {
 #####
 
 resource "kubernetes_config_map" "this" {
-  count = var.enabled ? 1 : 0
-
   metadata {
     name      = var.config_map_name
     namespace = var.namespace
@@ -446,8 +440,6 @@ resource "kubernetes_config_map" "this" {
 #####
 
 resource "kubernetes_secret" "this" {
-  count = var.enabled ? 1 : 0
-
   metadata {
     name      = var.secret_name
     namespace = var.namespace

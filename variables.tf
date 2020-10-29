@@ -7,11 +7,6 @@ variable "annotations" {
   default     = {}
 }
 
-variable "enabled" {
-  description = "Whether or not to enable this module."
-  default     = true
-}
-
 variable "labels" {
   description = "Additionnal labels that will be merged on all resources."
   default     = {}

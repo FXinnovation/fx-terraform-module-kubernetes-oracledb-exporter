@@ -34,7 +34,6 @@ Terraform module to deploy oracle db exporter
 | deployment\_name | Name of the deployment that will be create. | `string` | `"oracledb-exporter"` | no |
 | deployment\_template\_annotations | Additionnal annotations that will be merged on the deployment template. | `map` | `{}` | no |
 | deployment\_template\_labels | Additionnal labels that will be merged on the deployment template. | `map` | `{}` | no |
-| enabled | Whether or not to enable this module. | `bool` | `true` | no |
 | image\_name | Name of the docker image to use. | `string` | `"iamseth/oracledb_exporter"` | no |
 | image\_pull\_policy | Image pull policy on the main container. | `string` | `"IfNotPresent"` | no |
 | image\_version | Tag of the docker image to use. | `string` | `"0.2.6a"` | no |
