@@ -1,4 +1,9 @@
 
+1.1.0 / 2021-08-16
+==================
+
+* feat: (BREAKING CHANGE) Update to version 2.x for kubernetes provider
+
 1.0.0 / 2020-10-29
 ==================
 
