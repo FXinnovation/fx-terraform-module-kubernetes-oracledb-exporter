@@ -3,6 +3,7 @@
 ==================
 
 * feat: (BREAKING CHANGE) Update to version 2.x for kubernetes provider
+* chore: bump pre-commit hooks
 
 1.0.0 / 2020-10-29
 ==================
