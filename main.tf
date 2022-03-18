@@ -15,7 +15,7 @@ locals {
   grafana_dashboards = [file("${path.module}/templates/grafana-dashboards/oracle.json")]
   prometheus_alert_groups_rules_annotations = merge(
     {
-      "source" = "https://scm.dazzlingwrench.fxinnovation.com/fxinnovation-public/terraform-module-kubernetes-oracledb-exporter"
+      "source" = "https://github.com/FXinnovation/fx-terraform-module-kubernetes-oracledb-exporter"
     },
     var.prometheus_alert_groups_rules_annotations
   )
